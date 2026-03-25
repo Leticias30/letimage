@@ -23,6 +23,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         // Aqui você pode validar extensões, tamanhos, etc.
         // Como o usuário já é autenticado, permitimos.
         return {
+          maximumSizeInBytes: 1024 * 1024 * 1024, // 1GB (50 images * 20MB)
           allowedContentTypes: [
             'application/zip',
             'application/x-zip-compressed',

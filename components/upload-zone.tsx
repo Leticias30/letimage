@@ -26,7 +26,10 @@ export function UploadZone() {
 
   const watermarkInputRef = useRef<HTMLInputElement>(null);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
+  const onDrop = useCallback((acceptedFiles: File[], fileRejections: any[]) => {
+    if (fileRejections.length > 0) {
+      alert("Algumas imagens foram recusadas. O tamanho máximo permitido é 20MB por imagem.");
+    }
     if (acceptedFiles.length > 50) {
       alert("Máximo de 50 imagens permitidas!");
       return;
@@ -38,6 +41,7 @@ export function UploadZone() {
     onDrop,
     accept: { 'image/*': [] },
     maxFiles: 50,
+    maxSize: 20 * 1024 * 1024, // 20MB
   });
 
   const removeFile = (index: number) => {
@@ -312,7 +316,7 @@ export function UploadZone() {
               : "Arraste imagens ou clique para selecionar"}
           </p>
           <p className="text-xs text-zinc-400 dark:text-zinc-600 font-medium">
-            Máximo de 50 fotos. Formatos suportados: JPG, PNG, WEBP.
+            Máximo de 50 fotos (até 20MB cada). Formatos: JPG, PNG, WEBP.
           </p>
         </div>
 
